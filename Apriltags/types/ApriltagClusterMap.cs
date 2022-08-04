@@ -436,7 +436,7 @@ namespace Apriltags
 
                 for (; i2 < l2; i2++) 
                 {
-                    ret.Add(c1[i2]);
+                    ret.Add(c2[i2]);
                 }
 
                 return ret;
