@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+// unity content start
+using UnityEngine;
+// unity content end
 
 namespace Apriltags.Utils
 {
     public static class Print
     {
+        // unity content start
         public static void PrintClustersData(List<Cluster.ClusterHash> clustersData)
         {
             for (int i = 0; i < clustersData.Count; i++)
@@ -21,6 +25,7 @@ namespace Apriltags.Utils
                 // }
             }
         }
+        // unity content end
 
         public static void Strtod(string expr, ref int pos, out double num)
         {

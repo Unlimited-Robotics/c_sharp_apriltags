@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 namespace Apriltags
 {
@@ -39,7 +40,7 @@ namespace Apriltags
             MaxNMaxima = 10;
             MinClusterPixels = 5;
             MaxLineFitMse = 10;
-            CosCriticalRad = Mathf.Cos(10 * Mathf.PI / 180);
+            CosCriticalRad = (float)Math.Cos(10 * (float)Math.PI / 180);
             Deglitch = 0;
             MinWhiteBlackDiff = 5;
         }

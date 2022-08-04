@@ -139,8 +139,8 @@ namespace Apriltags
                     int a = edge, b = (edge + 1) & 3; // indices of the end points.
 
                     // compute the normal to the current line estimate
-                    double nx = quad.Corners[b].y - quad.Corners[a].y;
-                    double ny = -quad.Corners[b].x + quad.Corners[a].x;
+                    double nx = quad.Corners[b][1] - quad.Corners[a][1];
+                    double ny = -quad.Corners[b][0] + quad.Corners[a][0];
                     double mag = Math.Sqrt(nx*nx + ny*ny);
                     nx /= mag;
                     ny /= mag;
@@ -164,8 +164,8 @@ namespace Apriltags
                         // sampling *right* at the corners, since those points are
                         // the least reliable.
                         double alpha = (1.0 + s) / (nsamples + 1);
-                        double x0 = alpha*quad.Corners[a].x + (1-alpha)*quad.Corners[b].x;
-                        double y0 = alpha*quad.Corners[a].y + (1-alpha)*quad.Corners[b].y;
+                        double x0 = alpha*quad.Corners[a][0] + (1-alpha)*quad.Corners[b][0];
+                        double y0 = alpha*quad.Corners[a][1] + (1-alpha)*quad.Corners[b][1];
 
                         // search along the normal to this line, looking at the
                         // gradients along the way. We're looking for a strong
@@ -272,8 +272,8 @@ namespace Apriltags
                         double L0 = W00*B0 + W01*B1;
 
                         // compute intersection
-                        quad.Corners[i].x = (float)(lines[i][0] + L0*A00);
-                        quad.Corners[i].y = (float)(lines[i][1] + L0*A10);
+                        quad.Corners[i][0] = (float)(lines[i][0] + L0*A00);
+                        quad.Corners[i][1] = (float)(lines[i][1] + L0*A10);
                     } else {
                         // this is a bad sign. We'll just keep the corner we had.
             //            printf("bad det: %15f %15f %15f %15f %15f\n", A00, A11, A10, A01, det);
@@ -296,8 +296,8 @@ namespace Apriltags
                 {
                     corr_arr[i][0] = (i==0 || i==3) ? -1 : 1;
                     corr_arr[i][1] = (i==0 || i==1) ? -1 : 1;
-                    corr_arr[i][2] = quad.Corners[i].x;
-                    corr_arr[i][3] = quad.Corners[i].y;
+                    corr_arr[i][2] = quad.Corners[i][0];
+                    corr_arr[i][3] = quad.Corners[i][1];
                 }
 
                 quad.H = null;
@@ -500,7 +500,7 @@ namespace Apriltags
                 // Debug.Log("black score " + black_score);
                 // Debug.Log("white score count " + black_score_count);
                 family.QuickDecodeCodeword(rcode, out entry);
-                return Mathf.Min(white_score / white_score_count, black_score / black_score_count);
+                return Math.Min(white_score / white_score_count, black_score / black_score_count);
             }
         }
     }

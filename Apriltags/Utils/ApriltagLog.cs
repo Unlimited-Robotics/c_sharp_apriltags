@@ -2,11 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
+// unity content start 
+using UnityEngine;
+//unity content end
 
 namespace Apriltags.Utils
 {
     public static class Log
     {
+
+        // unity content start
         public static int[,,] ConvertTexture2dToArray(Texture2D tex)
         {
             // Debug.Log("tex dims " + tex.width + ", " + tex.height);
@@ -31,6 +36,7 @@ namespace Apriltags.Utils
         
             return output;
         }
+        // unity contnet end
 
         public static void SaveImageDataToFile(string fileName, int[,,] imageData)
         {
@@ -124,9 +130,9 @@ namespace Apriltags.Utils
                 file.WriteLine("quad index " + i);
                 for (int j = 0; j < quadsData[i].Corners.Length; j++)
                 {
-                    Vector2 p = quadsData[i].Corners[j];
+                    double[] p = quadsData[i].Corners[j];
                     file.WriteLine("quad corner index " + j);
-                    file.WriteLine("x " + p.x.ToString("F2") + ", y " + p.y.ToString("F2"));
+                    file.WriteLine("x " + p[0].ToString("F2") + ", y " + p[1].ToString("F2"));
                 }
                 file.WriteLine("quad reversed border " + Convert.ToInt32(quadsData[i].ReversedBorder));
             }

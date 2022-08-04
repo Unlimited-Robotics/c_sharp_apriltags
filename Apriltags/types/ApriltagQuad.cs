@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using System.Linq;
 
 namespace Apriltags
 {
     public class Quad
     {
-        public Vector2[] Corners;
+        public double[][] Corners;
         public bool ReversedBorder;
 
         // H: tag coordinates ([-1,1] at the black corners) to pixels
@@ -17,20 +16,20 @@ namespace Apriltags
 
         public Quad()
         {
-            Corners = new Vector2[4];
-            Corners[0] = new Vector2();
-            Corners[1] = new Vector2();
-            Corners[2] = new Vector2();
-            Corners[3] = new Vector2();
+            Corners = new double[4][];
+            Corners[0] = new double[2];
+            Corners[1] = new double[2];
+            Corners[2] = new double[2];
+            Corners[3] = new double[2];
         }
 
         public Quad(Quad copy)
         {
-            Corners = new Vector2[4];
-            Corners[0] = new Vector2(copy.Corners[0].x, copy.Corners[0].y);
-            Corners[1] = new Vector2(copy.Corners[1].x, copy.Corners[1].y);
-            Corners[2] = new Vector2(copy.Corners[2].x, copy.Corners[2].y);
-            Corners[3] = new Vector2(copy.Corners[3].x, copy.Corners[3].y);
+            Corners = new double[4][];
+            Corners[0] = new double[] { copy.Corners[0][0], copy.Corners[0][1] };
+            Corners[1] = new double[] { copy.Corners[1][0], copy.Corners[1][1] };
+            Corners[2] = new double[] { copy.Corners[2][0], copy.Corners[2][1] };
+            Corners[3] = new double[] { copy.Corners[3][0], copy.Corners[3][1] };
             ReversedBorder = copy.ReversedBorder;
             H = copy.H;
             Hinv = copy.Hinv;
@@ -330,8 +329,8 @@ namespace Apriltags
                     double L0 = W00*B0 + W01*B1;
 
                     // compute intersection
-                    quad.Corners[i].x = (float)(lines[i][0] + L0*A00);
-                    quad.Corners[i].y = (float)(lines[i][1] + L0*A10);
+                    quad.Corners[i][0] = (float)(lines[i][0] + L0*A00);
+                    quad.Corners[i][1] = (float)(lines[i][1] + L0*A10);
 
                     res = true;
                 }
@@ -346,8 +345,8 @@ namespace Apriltags
                 {
                     int idxa = i; // 0, 1, 2,
                     int idxb = (i+1) % 3; // 1, 2, 0
-                    float xVal = quad.Corners[idxb].x - quad.Corners[idxa].x;
-                    float yVal = quad.Corners[idxb].y - quad.Corners[idxa].y;
+                    float xVal = (float)(quad.Corners[idxb][0] - quad.Corners[idxa][0]);
+                    float yVal = (float)(quad.Corners[idxb][1] - quad.Corners[idxa][1]);
                     length[i] = Math.Sqrt(xVal*xVal + yVal*yVal);
                 }
                 p = (length[0] + length[1] + length[2]) / 2;
@@ -360,8 +359,8 @@ namespace Apriltags
                     int[] idxs = new int[]{ 2, 3, 0, 2 };
                     int idxa = idxs[i];
                     int idxb = idxs[i+1];
-                    float xVal = quad.Corners[idxb].x - quad.Corners[idxa].x;
-                    float yVal = quad.Corners[idxb].y - quad.Corners[idxa].y;
+                    float xVal = (float)(quad.Corners[idxb][0] - quad.Corners[idxa][0]);
+                    float yVal = (float)(quad.Corners[idxb][1] - quad.Corners[idxa][1]);
                     length[i] = Math.Sqrt(xVal*xVal + yVal*yVal);
                 }
                 p = (length[0] + length[1] + length[2]) / 2;
@@ -379,10 +378,10 @@ namespace Apriltags
                 {
                     int i0 = i, i1 = (i+1)&3, i2 = (i+2)&3;
 
-                    double dx1 = quad.Corners[i1].x - quad.Corners[i0].x;
-                    double dy1 = quad.Corners[i1].y - quad.Corners[i0].y;
-                    double dx2 = quad.Corners[i2].x - quad.Corners[i1].x;
-                    double dy2 = quad.Corners[i2].y - quad.Corners[i1].y;
+                    double dx1 = quad.Corners[i1][0] - quad.Corners[i0][0];
+                    double dy1 = quad.Corners[i1][1] - quad.Corners[i0][1];
+                    double dx2 = quad.Corners[i2][0] - quad.Corners[i1][0];
+                    double dy2 = quad.Corners[i2][1] - quad.Corners[i1][1];
                     double cos_dtheta = (dx1*dx2 + dy1*dy2)/Math.Sqrt((dx1*dx1 + dy1*dy1)*(dx2*dx2 + dy2*dy2));
 
                     float cosCritRad = detector.QuadThreshParams.CosCriticalRad;

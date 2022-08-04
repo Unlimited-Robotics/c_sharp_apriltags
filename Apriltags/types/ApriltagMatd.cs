@@ -120,7 +120,7 @@ namespace Apriltags
 
             if(IsScalar() == false)
             {
-                Debug.LogError("cant convert none scalat matrix to double");
+                // Debug.LogError("cant convert none scalat matrix to double");
             }
             else
             {

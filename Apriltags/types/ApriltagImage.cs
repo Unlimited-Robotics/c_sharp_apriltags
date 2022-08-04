@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+// unity content start
 using UnityEngine;
+//unity content end
 
 namespace Apriltags
 {
@@ -21,7 +23,7 @@ namespace Apriltags
         {
             if(print == true)
             {
-                Debug.Log("index " + (y*Stride + x));
+                // Debug.Log("index " + (y*Stride + x));
             }
             return _pixels[y*Stride + x];
         }
@@ -38,7 +40,7 @@ namespace Apriltags
             _pixels[y*Stride + x] = value;
             if(print == true)
             {
-                Debug.Log("index " + (y*Stride + x));
+                // Debug.Log("index " + (y*Stride + x));
             }
         }
 
@@ -54,6 +56,7 @@ namespace Apriltags
             return stride;
         }
         
+        // unity content start 
         public Image(Texture2D texture)
         {
             Width = texture.width;
@@ -83,6 +86,16 @@ namespace Apriltags
                     _pixels[(texture.height - 1 - j)*Stride + i] = Utils.Calculations.Round(res);
                 }
             }
+        }
+        //unity content end
+
+        public Image(int width, int height, byte[] pixels)
+        {
+            Width = width;
+            Height = height;
+
+            Stride = getStride(Width, 96);
+            _pixels = pixels;
         }
 
         public Image(int width, int height, int alignment)

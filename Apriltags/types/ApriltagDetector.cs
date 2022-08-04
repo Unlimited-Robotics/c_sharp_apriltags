@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System;
 
 namespace Apriltags
 {
@@ -180,7 +181,7 @@ namespace Apriltags
 
             if(QuadSigma != 0)
             {
-                float sigma = Mathf.Abs(QuadSigma);
+                float sigma = Math.Abs(QuadSigma);
                 int ksz = (int)(4 * sigma);
 
                 if((ksz & 1) == 0)
@@ -248,13 +249,13 @@ namespace Apriltags
                     {
                         if (QuadDecimate == 1.5) 
                         {
-                            q.Corners[j].x *= QuadDecimate;
-                            q.Corners[j].y *= QuadDecimate;
+                            q.Corners[j][0] *= QuadDecimate;
+                            q.Corners[j][1] *= QuadDecimate;
                         } 
                         else 
                         {
-                            q.Corners[j].x = (q.Corners[j].x - 0.5f)*QuadDecimate + 0.5f;
-                            q.Corners[j].y = (q.Corners[j].y - 0.5f)*QuadDecimate + 0.5f;
+                            q.Corners[j][0] = (q.Corners[j][0] - 0.5f)*QuadDecimate + 0.5f;
+                            q.Corners[j][1] = (q.Corners[j][1] - 0.5f)*QuadDecimate + 0.5f;
                         }
                     }
                 }

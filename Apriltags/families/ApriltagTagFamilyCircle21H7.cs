@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-
 namespace Apriltags
 {
     public class TagFamilyCircle21H7 : ApriltagFamily

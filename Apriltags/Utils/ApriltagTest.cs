@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
+// unity content start
+using UnityEngine;
+
 
 namespace Apriltags.Utils
 {
@@ -85,3 +88,5 @@ namespace Apriltags.Utils
         }
     }
 }
+
+// unity content end
