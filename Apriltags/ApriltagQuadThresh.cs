@@ -5,21 +5,30 @@ namespace Apriltags
 {
     public static class QuadThresh
     {
-        public static List<Quad> GetQuadThresh(Detector detector, Image image)
+        public static List<Quad> GetQuadThresh(Detector detector, Image image, bool isDebug)
         {
             int w = image.Width, h = image.Height;
             Image threshImage = getThresholdImage(detector, image);
-            Utils.Log.SaveImageDataToFile("image_thresh", threshImage);
+            if(isDebug == true)
+            {
+                Utils.Log.SaveImageDataToFile("image_thresh", threshImage);
+            }
 
             int ts = threshImage.Stride;
 
         ////////////////////////////////////////////////////////
             // step 2. find connected components.
             UnionFind uf = new UnionFind(detector, threshImage, w, h);
-            Utils.Log.SaveUnionfindDataToFile("unionfind_start", uf);
+            if(isDebug == true)
+            {
+                Utils.Log.SaveUnionfindDataToFile("unionfind_start", uf);
+            }
 
             List<Cluster> clusters = ClusterMap.GradientClusters(detector, threshImage, w, h, ts, uf);
-            Utils.Log.SaveClustersDataToFile("clusters_start", clusters);
+            if(isDebug == true)
+            {
+                Utils.Log.SaveClustersDataToFile("clusters_start", clusters);
+            }
 
         
             List<Quad> quads = fitQuads(detector, w, h, clusters, image);
