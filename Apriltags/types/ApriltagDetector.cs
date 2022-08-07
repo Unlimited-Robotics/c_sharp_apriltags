@@ -233,7 +233,7 @@ namespace Apriltags
                 }
             }
 
-            List<Quad> quads = QuadThresh.GetQuadThresh(this, image);
+            List<Quad> quads = QuadThresh.GetQuadThresh(this, image, IsDebug);
             if(IsDebug == true)
             {
                 Utils.Log.SaveQuadsDataToFile("quads_start", quads);
