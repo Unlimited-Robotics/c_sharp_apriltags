@@ -62,28 +62,17 @@ namespace Apriltags
             Width = texture.width;
             Height = texture.height;
 
+            byte[] data = Utils.Calculations.CreateGrayscaleFromUnityRGB(texture.GetRawTextureData());
+
             Stride = getStride(Width, 96);
 
             _pixels = new byte[Height * Stride];
 
-            Color[] pixels = texture.GetPixels();
-
-            for (int i = 0; i < texture.width; i++)
+            for (int i = 0; i < Width; i++)
             {
-                for (int j = 0; j < texture.height; j++)
+                for (int j = 0; j < Height; j++)
                 {
-                    Color pixel = pixels[i + j * texture.width];
-                    Color32 pixelBig = pixel;
-                    
-                    double res = pixelBig.r * 0.299f + pixelBig.g * 0.587f + pixelBig.b * 0.114f;
-
-                    if((texture.height - 1 - j) * texture.width + i == 0)
-                    {
-                        // Debug.Log("r " + pixelBig.r + ", g " + pixelBig.g + ", b " + pixelBig.b);
-                        // Debug.Log("r " + pixelBig.r * 0.299f + ", g " + pixelBig.g * 0.587f + ", b " + pixelBig.b * 0.114f);
-                    }
-
-                    _pixels[(texture.height - 1 - j)*Stride + i] = Utils.Calculations.Round(res);
+                    _pixels[j*Stride + i] = pixels[i + j * Width];
                 }
             }
         }
@@ -95,7 +84,14 @@ namespace Apriltags
             Height = height;
 
             Stride = getStride(Width, 96);
-            _pixels = pixels;
+            _pixels = new byte[Height*Stride];
+            for (int i = 0; i < Width; i++)
+            {
+                for (int j = 0; j < Height; j++)
+                {
+                    _pixels[j*Stride + i] = pixels[i + j * Width];
+                }
+            }
         }
 
         public Image(int width, int height, int alignment)

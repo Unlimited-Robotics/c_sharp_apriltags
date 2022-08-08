@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using System.Threading.Tasks;
 using System;
 
 namespace Apriltags
@@ -14,7 +15,7 @@ namespace Apriltags
 
         public int NThreads;
         public int TaskPos;
-        public Thread[] Threads;
+        public Task[] Threads;
         public List<int> Status;
         public List<WorkTask> Tasks;
         public int EndCount;
@@ -29,7 +30,7 @@ namespace Apriltags
 
             if(NThreads > 1)
             {
-                Threads = new Thread[NThreads];
+                Threads = new Task[NThreads];
                 GetTaskLock = new Mutex();
                 FinishTaskLock = new Mutex();
                 FinishTasksSemaphore = new SemaphoreSlim(0,1);
@@ -43,7 +44,7 @@ namespace Apriltags
             {
                 for (int i = 0; i < NThreads; i++)
                 {
-                    Threads[i] = new Thread(completeTasks);
+                    Threads[i] = new Task(() => completeTasks());
                     Threads[i].Start();
                 }
 

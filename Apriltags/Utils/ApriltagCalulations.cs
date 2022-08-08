@@ -374,5 +374,25 @@ namespace Apriltags.Utils
             */
 
         }
+
+        // Warning: unity counts pixels along y axis from top to bottom
+        public static byte[] CreateGrayscaleFromUnityRGB(int width, int height, byte[] data)
+        {
+            byte[] output = new byte[width*_currentHeight];
+
+            for (int i = 0; i < width; i++)
+            {
+                for (int j = 0; j < height; j++)
+                {
+                    int index = (i + j * width);
+
+                    double res = data[index*3] * 0.299f + data[index*3 + 1] * 0.587f + data[index*3 + 2] * 0.114f;
+
+                    output[(height - 1 - j)*width + i] = Apriltags.Utils.Calculations.Round(res);
+                }
+            }
+
+            return output;
+        }
     }
 }
