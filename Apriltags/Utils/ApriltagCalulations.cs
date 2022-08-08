@@ -378,7 +378,7 @@ namespace Apriltags.Utils
         // Warning: unity counts pixels along y axis from top to bottom
         public static byte[] CreateGrayscaleFromUnityRGB(int width, int height, byte[] data)
         {
-            byte[] output = new byte[width*_currentHeight];
+            byte[] output = new byte[width*height];
 
             for (int i = 0; i < width; i++)
             {

@@ -62,7 +62,7 @@ namespace Apriltags
             Width = texture.width;
             Height = texture.height;
 
-            byte[] data = Utils.Calculations.CreateGrayscaleFromUnityRGB(texture.GetRawTextureData());
+            byte[] data = Utils.Calculations.CreateGrayscaleFromUnityRGB(Width, Height, texture.GetRawTextureData());
 
             Stride = getStride(Width, 96);
 
@@ -72,7 +72,7 @@ namespace Apriltags
             {
                 for (int j = 0; j < Height; j++)
                 {
-                    _pixels[j*Stride + i] = pixels[i + j * Width];
+                    _pixels[j*Stride + i] = data[i + j * Width];
                 }
             }
         }
